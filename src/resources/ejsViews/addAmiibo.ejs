@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        
+        const sendPostRequest = () => {
+            
+            const type = document.getElementById("typeSelect").value;
+            const character = document.getElementById("characterSelect").value;
+            const gameSerie = document.getElementById("gameSerieSelect").value;
+            const serie = document.getElementById("serieSelect").value;
+            const image = document.getElementById("myImg").src;
+            const name = document.getElementById("amiiboName").value;
+        
+
+              $.ajax({
+                url: "/api/amiibo",
+                type: "post",
+                data: {
+                    "type": type,
+                    "character": character,
+                    "gameSerie": gameSerie,
+                    "serie": serie,
+                    "name": name,
+                    "image" : image 
+                    
+                },
+                dataType: 'json',
+                success: () => 
+                    location.replace("/")
+                
+            });  
+        }
+           
+        const onChange = (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = () => {
+                const displayImage = document.getElementById("myImg");
+                displayImage.src = reader.result;   
+        };
+
+        reader.readAsDataURL(file);
+        }
+        const returnBtn = () => location.href = "/";
+    </script>
+    <title>Amiibo</title>
+    <link rel="stylesheet" href="assets/css/form.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+
+</head>
+
+<body>
+  
+ <form id="form" onsubmit="sendPostRequest()">
+            <!-- Add Type -->
+             <h3>Add new Amiibo !</h3>
+            <button class="returnBtn" onclick="returnBtn()">Retour</button>
+
+            <label for="typeSelect">Choose a type:</label>
+            <select id="typeSelect">
+                <%for(let i=0; i < types.length; i++) { %>
+                    <option><%=types[i].name%></option> 
+                <% } %>
+            </select>
+           
+                      
+            <!-- Add Character -->
+            <label for="characterSelect">Choose a character:</label>
+                <select id="characterSelect">
+                    <%for(let i=0; i < characters.length; i++) { %>
+                        <option><%=characters[i].name%></option> 
+                    <% } %>
+                </select>
+           
+           
+
+            <!-- Add GameSerie -->
+            <label for="gameSerieSelect">Choose a game serie:</label>
+                <select id="gameSerieSelect">
+                    <%for(let i=0; i < gameSeries.length; i++) { %>
+                        <option><%=gameSeries[i].name%></option> 
+                    <% } %>
+                </select>
+           
+         
+
+            <!-- Add Serie -->
+            <label for="serieSelect">Choose a serie:</label>
+                <select id="serieSelect">
+                    <%for(let i=0; i < series.length; i++) { %>
+                        <option><%=series[i].name%></option> 
+                    <% } %>
+                </select>
+            <label for="amiiboName">Nom du nouvel Amiibo</label>
+            <input type="text" id="amiiboName">
+
+            <label for="imgSend">Image de l'Amiibo</label>
+            <input type="file" id="imgSend" placeholder="Image de l'Amiibo" onchange="onChange(event)">
+            <img id="myImg">
+            <button type="submit">Envoyer</button>
+            
+        </form>
+
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amiibo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>const numberPort = "<%= port %>";
+    const changeToAddType = () => {
+        location.replace("/addType");
+        } 
+        const changeToAddAmiibo = () => {
+        location.replace("/addAmiibo");
+        } 
+    </script>
+  
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    
+    <%- include('nav'); -%>
+
+    <%- include('main'); -%> 
+
+    <script src="main.js"></script>
+</body>
+</html>
